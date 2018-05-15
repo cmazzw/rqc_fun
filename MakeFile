@@ -1,0 +1,41 @@
+# Which compiler
+CC = gcc
+
+# Where are include files kept
+INCLUDE = ./include
+
+#Options for development
+CFLAGS = -g -Wall -ansi
+
+main: main.o readregfile.o qc_list.o qc_node.o getthresholdbymon.o strtodouble.o reglen.o match.o substr.o
+	$(CC) -o main main.o readregfile.o qc_list.o qc_node.o getthresholdbymon.o strtodouble.o reglen.o match.o substr.o -I$(INCLUDE) -L./lib -lsqlite3
+
+main.o: main.c
+	$(CC) -c -I$(INCLUDE) main.c
+
+readregfile.o: readregfile.c
+	$(CC) -c -I$(INCLUDE) readregfile.c
+
+qc_list.o: qc_list.c
+	$(CC) -c -I$(INCLUDE) qc_list.c
+
+qc_node.o: qc_node.c
+	$(CC) -c -I$(INCLUDE) qc_node.c
+
+getthresholdbymon.o: getthresholdbymon.c
+	$(CC) -c -I$(INCLUDE) getthresholdbymon.c
+
+strtodouble.o: strtodouble.c
+	$(CC) -c -I$(INCLUDE) strtodouble.c
+
+reglen.o: reglen.c
+	$(CC) -c -I$(INCLUDE) reglen.c
+
+match.o: match.c
+	$(CC) -c -I$(INCLUDE) match.c
+
+substr.o: substr.c
+	$(CC) -c -I$(INCLUDE) substr.c
+
+clean:
+	-rm main.o readregfile.o qc_list.o qc_node.o getthresholdbymon.o strtodouble.o reglen.o match.o substr.o
