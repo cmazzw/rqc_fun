@@ -7,8 +7,8 @@ INCLUDE = ./include
 #Options for development
 CFLAGS = -g -Wall -ansi
 
-main: main.o readregfile.o qc_list.o qc_node.o getthresholdbymon.o strtodouble.o reglen.o match.o substr.o
-	$(CC) -o main main.o readregfile.o qc_list.o qc_node.o getthresholdbymon.o strtodouble.o reglen.o match.o substr.o -I$(INCLUDE) -L./lib -lsqlite3
+main: main.o readregfile.o qc_list.o qc_node.o getthresholdbymon.o strtodouble.o reglen.o match.o substr.o remove_dir.o
+	$(CC) -o main main.o readregfile.o qc_list.o qc_node.o getthresholdbymon.o strtodouble.o reglen.o match.o substr.o remove_dir.o -I$(INCLUDE) -L./lib -lsqlite3
 
 main.o: main.c
 	$(CC) -c -I$(INCLUDE) main.c
@@ -37,5 +37,8 @@ match.o: match.c
 substr.o: substr.c
 	$(CC) -c -I$(INCLUDE) substr.c
 
+remove_dir.o: remove_dir.c
+	$(CC) -c -I$(INCLUDE) remove_dir.c
+
 clean:
-	-rm main.o readregfile.o qc_list.o qc_node.o getthresholdbymon.o strtodouble.o reglen.o match.o substr.o
+	-rm main.o readregfile.o qc_list.o qc_node.o getthresholdbymon.o strtodouble.o reglen.o match.o substr.o remove_dir.o

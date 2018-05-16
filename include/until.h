@@ -7,4 +7,6 @@ int reglen(char *s);
 
 int substr(char dst[], char src[],int start, int len);
 
+int remove_dir(const char *dir);
+
 #endif

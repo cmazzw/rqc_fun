@@ -11,7 +11,7 @@ int getthresholdbymon(threshold **th,const char *mon)
   sqlite3 *db=NULL;
   int rc;
   //打开指定的数据库文件,如果不存在将创建一个同名的数据库文件  
-  rc = sqlite3_open("/home/acenter/src/rqc/testDB.db", &db);
+  rc = sqlite3_open("/home/acenter/src/rqc/threshDB.db", &db);
   if(rc)
   {
     printf("Can't open database: %s/n", sqlite3_errmsg(db));
