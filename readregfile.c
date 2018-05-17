@@ -36,6 +36,7 @@ int readregfile(char *path,char *filename,FILE *log_fp,sta_data **pHead)
          line_num++;
          if(num-group*4==0)//解析第一行(基本信息)
             {
+               //printf("解析第一行\n");
                if(reglen(line)==34)
                  {
                     int f_status=sscanf(line,"%5s",sta_temp.station_num);
@@ -95,7 +96,8 @@ int readregfile(char *path,char *filename,FILE *log_fp,sta_data **pHead)
                     //读到了新的台站数据
                     //0、将第四行赋值为NNNN
                     strncpy(sta_temp.four,"NNNN",135);sta_temp.four[135]='\0';
-                    strncpy(sta_temp.filename,filename,63);sta_temp.filename[63]='\0';
+                    strncpy(sta_temp.filename,filename,46);sta_temp.filename[46]='\0';
+                    //printf("filename:%s-->struct:%s\n",filename,sta_temp.filename);
                     //1、先将上一个格式正确的台站数据写入
                     if(strcmp(sta_temp.station_num,"99999")!=0 && strcmp(sta_temp.o_time,"99999999999999")!=0)
                       {
@@ -123,7 +125,8 @@ int readregfile(char *path,char *filename,FILE *log_fp,sta_data **pHead)
                  {
                     //读取能见度或者NNNN数据
                     sprintf(sta_temp.four,line);
-                    sprintf(sta_temp.filename,filename);
+                    //sprintf(sta_temp.filename,filename);
+                    strncpy(sta_temp.filename,filename,46);sta_temp.filename[46]='\0';
                     //将本次台站的数据写入
                     if(strcmp(sta_temp.station_num,"99999")!=0 && strcmp(sta_temp.o_time,"99999999999999")!=0)
                       {

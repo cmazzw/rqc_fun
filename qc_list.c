@@ -31,31 +31,32 @@ sta_data *qc_list(sta_data *pHead,FILE *qc_fp)
         //对pMove节点进行质量检查
         if(status==0)//绿色节点
           {
-             //此节点不删除，pMovePre和pMove均进行移位操作，对下一个节点进行质控
-             //printf("质控结果staion:%s,time:%s,ele:%s,value:%f,filename:%s\n",result.station_num,result.o_time,result.ele,result.ele_value,result.filename);
+             printf("%s green %s %s-%s-%s %s:%s:%s %s\n",qc_time,pMove->station_num,pMove->o_year,pMove->o_month,pMove->o_day,pMove->o_hour,pMove->o_min,pMove->o_sec,pMove->filename);
              pMovePre = pMovePre->next;
              pMove = pMove->next;
           }
         else if(status==1)//黄色节点
           {
+             //对黄色节点进行持久化操作,日志?消息队列？
+             //printf("filename is %s\n",pMove->filename);
+             printf("%s warn %s %s-%s-%s %s:%s:%s %s %.2f %s\n",qc_time,pMove->station_num,pMove->o_year,pMove->o_month,pMove->o_day,pMove->o_hour,pMove->o_min,pMove->o_sec,result.ele,result.ele_value,pMove->filename);
+             fprintf(qc_fp,"warn %s %s %s %.2f %s\n",pMove->station_num,pMove->o_year,result.ele,result.ele_value,pMove->filename);
+
              //此节点不删除，pMovePre和pMove均进行移位操作
              pMovePre = pMovePre->next;
              pMove = pMove->next;
-
-             //对黄色节点进行持久化操作,日志?消息队列？
-             printf("warn %s %s %s\n",result.station_num,result.o_time,result.filename);
-             fprintf(qc_fp,"%s warn %s %s %s %.2f %s\n",qc_time,result.station_num,result.o_time,result.ele,result.ele_value,result.filename);
           }
         else if(status==-1)//红色节点
           {
+             //对红色节点进行持久化操作,日志?消息队列
+             //printf("filename is %s\n",pMove->filename);
+             printf("err %s %s %s %.2f %s\n",pMove->station_num,pMove->o_year,result.ele,result.ele_value,pMove->filename);
+             fprintf(qc_fp,"%s err %s %s-%s-%s %s:%s:%s %s %.2f %s\n",qc_time,pMove->station_num,pMove->o_year,pMove->o_month,pMove->o_day,pMove->o_hour,pMove->o_min,pMove->o_sec,result.ele,result.ele_value,pMove->filename);
+             
              //此节点删除
              pMovePre->next = pMove->next;
              free(pMove);
              pMove = pMovePre->next;
-
-             //对红色节点进行持久化操作,日志?消息队列？
-             printf("err %s %s %s\n",result.station_num,result.o_time,result.filename);
-             fprintf(qc_fp,"%s err %s %s %s %.2f %s\n",qc_time,result.station_num,result.o_time,result.ele,result.ele_value,result.filename);
           }
     }
     return pHead;

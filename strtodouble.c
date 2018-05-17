@@ -2,12 +2,23 @@
 #include <until.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 //对于缺测"////"则转换为特征值999.999
 int strtodouble(sta_data *pTail,struct station_temp *sta_temp)
 {
     sprintf(pTail->station_num,sta_temp->station_num);
-    sprintf(pTail->o_time,sta_temp->o_time);
+
+    char year[5],month[3],day[3],hour[3],minitus[3],second[3];
+    substr(pTail->o_year,sta_temp->o_time,0,4);
+    substr(pTail->o_month,sta_temp->o_time,4,2);
+    substr(pTail->o_day,sta_temp->o_time,6,2);
+    substr(pTail->o_hour,sta_temp->o_time,8,2);
+    substr(pTail->o_min,sta_temp->o_time,10,2);
+    substr(pTail->o_sec,sta_temp->o_time,12,2);
+    //printf("before substr sta_temp->o_time %s\n",sta_temp->o_time);
+    //printf("after substr:%s-%s-%s %s:%s:%s\n",pTail->o_year,pTail->o_month,pTail->o_day,pTail->o_hour,pTail->o_min,pTail->o_sec);
+    //sprintf(pTail->o_time,"%s-%s-%s %s:%s:%s",year,month,day,hour,minitus,second);
 
     //两分钟风速
     if(sta_temp->wind2[0]=='/')
@@ -157,7 +168,8 @@ int strtodouble(sta_data *pTail,struct station_temp *sta_temp)
     sprintf(pTail->second,sta_temp->second);
     sprintf(pTail->three,sta_temp->three);
     sprintf(pTail->four,sta_temp->four);
-    sprintf(pTail->filename,sta_temp->filename);
+    strncpy(pTail->filename,sta_temp->filename,46);pTail->filename[46]='\0';
+    //sprintf(pTail->filename,sta_temp->filename);
     return(1); 
 }
 

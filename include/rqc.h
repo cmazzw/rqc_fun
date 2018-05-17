@@ -6,11 +6,8 @@
 
 struct qc_result
 {
-    char station_num[6];
-    char o_time[15];
     char ele[16];
     double ele_value;
-    char filename[64];
 };
 
 typedef struct qc_threshold
@@ -33,7 +30,7 @@ typedef struct qc_threshold
 struct station_temp
 {
     char station_num[6];//台站号   H0414
-    char o_time[15];//观测时间     20180417000000
+    char o_time[20];//观测时间     2018-04-17 00:00:00
     char wind2[4];//两分钟平均风速  112
     char wind10[4];//十分钟平均风速 105
     char wind_max[4];//最大风速     109
@@ -60,7 +57,12 @@ struct station_temp
 typedef struct station_data
 {
    char station_num[6];//台站号   H0414
-   char o_time[15];//观测时间     20180417000000
+   char o_year[5];
+   char o_month[3];
+   char o_day[3];
+   char o_hour[3];
+   char o_min[3];
+   char o_sec[3];
    double wind2;//两分钟平均风速  112
    double wind10;//十分钟平均风速 105
    double wind_max;//最大风速     109

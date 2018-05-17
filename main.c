@@ -35,7 +35,7 @@ int main(int argc,char **argv)
     char awscard[]="Z_SURF_C_B\?\?\?-REG_*_O_AWS_FTM.txt";
     
     while(1)
-    {
+     {
         //获取当前时间
         time_t time_file;//time_t就是long int 类型
         struct tm  *tm_file;//存储时间的结构体
@@ -81,6 +81,7 @@ int main(int argc,char **argv)
             //获取文件的类型
             lstat(recv_filename,&statbuf);
             
+            
             //如果是一个文件而且文件名符合模版则进行文件处理
             if(S_ISREG(statbuf.st_mode))
              {
@@ -98,7 +99,6 @@ int main(int argc,char **argv)
                     if(datahead->next!=NULL)
                      {
                        qc_list(datahead,qc_fp);
-
                        //对质量合格的台站数据写入到发送目录
                
                        //1.定义文件名
